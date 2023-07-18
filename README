@@ -1,0 +1,28 @@
+chatgpt_detector/
+├── api/
+│   ├── chatgpt_detector/
+│   │   ├── __init__.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   └── wsgi.py
+│   ├── manage.py
+│   └── detector/
+│       ├── __init__.py
+│       ├── views.py
+│       ├── urls.py
+│       └── ...
+├── model/
+│   ├── Dockerfile  # Dockerfile for training the model
+│   └── train.py    # Script for training the model
+├── inference/
+│   ├── Dockerfile  # Dockerfile for running inference using the trained model
+│   └── app.py      # Flask or Django app for serving the inference API
+├── terraform/
+│   ├── main.tf     # Terraform configuration for creating AWS infrastructure
+│   ├── variables.tf    # Variables file for Terraform
+│   └── ...
+├── README.md
+└── requirements.txt  # Python dependencies for the project
+
+
+docker build -t chatgpt-train -f model/Dockerfile .

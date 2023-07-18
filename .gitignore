@@ -1,0 +1,6 @@
+.DS_Store
+.terraform
+.vscode/
+# ignore environment
+.env
+*venv*
