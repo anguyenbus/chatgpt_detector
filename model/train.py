@@ -1,23 +1,19 @@
-import torch
-from transformers import RobertaTokenizer, RobertaForSequenceClassification
-from torch.utils.data import DataLoader, Dataset
-from datetime import datetime
 import os
+from datetime import datetime
 
-# Set the path to your training data file
-TRAIN_DATA_FILE = "data/training_data.txt"
-
-# Set the number of training epochs and batch size
-NUM_EPOCHS = 10
-BATCH_SIZE = 16
+import torch
+from constants import (BATCH_SIZE, DEPLOY, MODEL_LATEST_S3_PATH, MODEL_S3_PATH,
+                       NUM_EPOCHS, TARGET_BUCKET, TRAIN_DATA_FILE)
+from s3_helper import S3Helper
+from torch.utils.data import DataLoader, Dataset
+from transformers import RobertaForSequenceClassification, RobertaTokenizer
 
 # Set the device (CPU or GPU) for training
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# Set the DEPLOY flag (change it to True or False based on your requirement)
-DEPLOY = False
-
 # Define your custom dataset for training
+
+
 class CustomDataset(Dataset):
     def __init__(self, file_path):
         # Load and preprocess your training data
@@ -53,8 +49,10 @@ class CustomDataset(Dataset):
 
 if __name__ == "__main__":
     # Initialize the tokenizer and model
-    tokenizer = RobertaTokenizer.from_pretrained("roberta-base-openai-detector")
-    model = RobertaForSequenceClassification.from_pretrained("roberta-base-openai-detector").to(DEVICE)
+    tokenizer = RobertaTokenizer.from_pretrained(
+        "roberta-base-openai-detector")
+    model = RobertaForSequenceClassification.from_pretrained(
+        "roberta-base-openai-detector").to(DEVICE)
 
     # Create your custom dataset
     dataset = CustomDataset(TRAIN_DATA_FILE)
@@ -91,7 +89,8 @@ if __name__ == "__main__":
             optimizer.zero_grad()
 
             # Forward pass
-            outputs = model(input_ids=input_ids, attention_mask=attention_mask, labels=labels)
+            outputs = model(input_ids=input_ids,
+                            attention_mask=attention_mask, labels=labels)
             loss = outputs.loss
             logits = outputs.logits
 
@@ -103,14 +102,9 @@ if __name__ == "__main__":
 
         epoch_loss = running_loss / len(data_loader)
         print(f"Epoch {epoch + 1} - Loss: {epoch_loss:.4f}")
-    DEPLOY
-    # Save the trained model
+
+    # versioning
+    s3_helper = S3Helper()
+    s3_helper.upload_model(model, TARGET_BUCKET, MODEL_S3_PATH)
     if DEPLOY:
-        model.save_pretrained("artifacts/latest")
-        tokenizer.save_pretrained("artifacts/latest")
-    else:
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        experiment_folder = os.path.join("artifacts/experiment", timestamp)
-        os.makedirs(experiment_folder, exist_ok=True)
-        model.save_pretrained(experiment_folder)
-        tokenizer.save_pretrained(experiment_folder)
+        s3_helper.upload_model(model, TARGET_BUCKET, MODEL_LATEST_S3_PATH)

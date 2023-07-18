@@ -1,3 +1,6 @@
 transformers==4.9.2
 torch==1.9.0
 flask==2.0.1
+boto3==1.18.59
+urllib3==1.26.2
+requests==2.25.0

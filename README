@@ -1,16 +1,4 @@
 chatgpt_detector/
-├── api/
-│   ├── chatgpt_detector/
-│   │   ├── __init__.py
-│   │   ├── settings.py
-│   │   ├── urls.py
-│   │   └── wsgi.py
-│   ├── manage.py
-│   └── detector/
-│       ├── __init__.py
-│       ├── views.py
-│       ├── urls.py
-│       └── ...
 ├── model/
 │   ├── Dockerfile  # Dockerfile for training the model
 │   └── train.py    # Script for training the model
@@ -19,10 +7,12 @@ chatgpt_detector/
 │   └── app.py      # Flask or Django app for serving the inference API
 ├── terraform/
 │   ├── main.tf     # Terraform configuration for creating AWS infrastructure
-│   ├── variables.tf    # Variables file for Terraform
+│   ├── variables.tf    # Variables tfile for Terraform
 │   └── ...
 ├── README.md
 └── requirements.txt  # Python dependencies for the project
 
 
 docker build -t chatgpt-train -f model/Dockerfile .
+
+docker run -it -e AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id --profile default) -e AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key --profile default) chatgpt-train
