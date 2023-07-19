@@ -1,6 +1,7 @@
 import torch
-from transformers import RobertaTokenizer, RobertaForSequenceClassification
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify, request
+from s3_download_folder import S3Helper
+from transformers import RobertaForSequenceClassification, RobertaTokenizer
 
 # Set the path to the saved model directory
 MODEL_DIR = "latest"
@@ -51,4 +52,5 @@ def predict():
 
 # Run the Flask application
 if __name__ == "__main__":
+    # run app
     app.run(host="0.0.0.0", port=5000)
