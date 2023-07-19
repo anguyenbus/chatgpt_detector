@@ -26,7 +26,7 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY: 373770620841.dkr.ecr.ap-southeast-2.amazonaws.com
           ECR_REPOSITORY: chatgptdetector
           IMAGE_TAG: chatgptdetector_image
         run: |
