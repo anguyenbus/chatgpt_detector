@@ -29,7 +29,7 @@ jobs:
           ECR_REGISTRY: 373770620841.dkr.ecr.ap-southeast-2.amazonaws.com
           ECR_REPOSITORY: chatgptdetector-model
           IMAGE_TAG: chatgptdetector_image
-        if: ${{ contains(github.event.commits[0].added, 'model/') || contains(github.event.commits[0].modified, 'model/') }}
+        if: ${{ contains(github.event.commits[0].message, 'build model') }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f model/Dockerfile .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -57,7 +57,7 @@ jobs:
           ECR_REGISTRY: 373770620841.dkr.ecr.ap-southeast-2.amazonaws.com
           ECR_REPOSITORY: chatgptdetector-inference
           IMAGE_TAG: chatgptdetector_image
-        if: ${{ contains(github.event.commits[0].added, 'inference/') || contains(github.event.commits[0].modified, 'inference/') }}
+        if: ${{ contains(github.event.commits[0].message, 'build inference') }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f inference/Dockerfile .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
