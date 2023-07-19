@@ -13,5 +13,8 @@ RUN pip install awscli
 
 # Copy the inference code into the container
 COPY inference/ .
+EXPOSE 5000
+EXPOSE 5001
+
 # Set the command to run when the container starts (inference script)
 ENTRYPOINT ["./run.sh"]
