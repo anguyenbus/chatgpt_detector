@@ -9,11 +9,9 @@ COPY requirements.txt .
 
 # Install the Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install awscli
 
 # Copy the inference code into the container
-COPY inference/inference.py .
-COPY inference/run.sh .
-COPY artifacts/latest /app/latest
-
+COPY inference/ .
 # Set the command to run when the container starts (inference script)
 ENTRYPOINT ["./run.sh"]
