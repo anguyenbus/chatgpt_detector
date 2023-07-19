@@ -1,9 +1,14 @@
+"""
+Author: An Nguyen
+"""
+
+
 import torch
 from flask import Flask, jsonify, request
 from s3_download_folder import S3Helper
 from transformers import RobertaForSequenceClassification, RobertaTokenizer
 
-# Set the path to the saved model directory
+# Set the path to the saved model directory, inferencing
 MODEL_DIR = "latest"
 
 # Set the device (CPU or GPU) for inference
