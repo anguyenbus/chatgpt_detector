@@ -2,5 +2,4 @@
 .terraform
 .vscode/
 # ignore environment
-.env
 *venv*
