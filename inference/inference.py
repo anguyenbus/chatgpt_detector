@@ -5,7 +5,6 @@ Author: An Nguyen
 
 import torch
 from flask import Flask, jsonify, request
-from s3_download_folder import S3Helper
 from transformers import RobertaForSequenceClassification, RobertaTokenizer
 
 # Set the path to the saved model directory, inferencing
@@ -22,6 +21,14 @@ model = RobertaForSequenceClassification.from_pretrained(MODEL_DIR).to(DEVICE)
 app = Flask(__name__)
 
 # API endpoint for prediction
+
+
+@app.route("/ping", methods=["GET"])
+def ping():
+    """
+    Healthcheck function.
+    """
+    return "Healthy"
 
 
 @app.route("/predict", methods=["POST"])
