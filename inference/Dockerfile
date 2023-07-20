@@ -14,9 +14,6 @@ ENV PATH="/opt/program:${PATH}"
 WORKDIR /opt/program
 
 
-# Set the working directory in the container
-WORKDIR /app
-
 # Copy the requirements file into the container
 COPY ./requirements.txt /opt/program/requirements.txt
 
