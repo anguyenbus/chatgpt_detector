@@ -13,8 +13,8 @@ RUN pip install awscli
 
 # Copy the inference code into the container
 COPY inference/ .
-EXPOSE 5000
-EXPOSE 5001
+
+ENV SM_MODEL_DIR /opt/ml/model
 
 # Set the command to run when the container starts (inference script)
-ENTRYPOINT ["./run.sh"]
+ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8080", "inference:app", "-n"]

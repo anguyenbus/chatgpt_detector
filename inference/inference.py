@@ -2,13 +2,15 @@
 Author: An Nguyen
 """
 
+import os
 
 import torch
 from flask import Flask, jsonify, request
 from transformers import RobertaForSequenceClassification, RobertaTokenizer
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Set the path to the saved model directory, inferencing
-MODEL_DIR = "latest"
+MODEL_DIR = os.environ["SM_MODEL_DIR"]
 
 # Set the device (CPU or GPU) for inference
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -17,10 +19,17 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 tokenizer = RobertaTokenizer.from_pretrained(MODEL_DIR)
 model = RobertaForSequenceClassification.from_pretrained(MODEL_DIR).to(DEVICE)
 
+
 # Create a Flask application
 app = Flask(__name__)
 
 # API endpoint for prediction
+
+# Since the web application runs behind a proxy (nginx), we need to
+# add this setting to our app.
+app.wsgi_app = ProxyFix(
+    app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+)
 
 
 @app.route("/ping", methods=["GET"])
@@ -60,9 +69,3 @@ def predict():
     # Return the prediction as JSON response
     response = {"input_text": input_text, "predicted_class": predicted_class}
     return jsonify(response)
-
-
-# Run the Flask application
-if __name__ == "__main__":
-    # run app
-    app.run(host="0.0.0.0", port=5000)
