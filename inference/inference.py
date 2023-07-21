@@ -10,15 +10,15 @@ from transformers import RobertaForSequenceClassification, RobertaTokenizer
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Set the path to the saved model directory, inferencing
-MODEL_DIR = os.environ["SM_MODEL_DIR"]
+MODEL_DIR = "/opt/ml/model"
 
 # Set the device (CPU or GPU) for inference
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Initialize the tokenizer and model
+# Initialize the tokenizer and model
 tokenizer = RobertaTokenizer.from_pretrained(MODEL_DIR)
 model = RobertaForSequenceClassification.from_pretrained(MODEL_DIR).to(DEVICE)
-
 
 # Create a Flask application
 app = Flask(__name__)
