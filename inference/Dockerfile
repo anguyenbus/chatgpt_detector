@@ -27,4 +27,4 @@ COPY inference/ /opt/program
 ENV SM_MODEL_DIR /opt/ml/model
 
 # Set the command to run when the container starts (inference script)
-ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8080", "inference:app"]
+ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8080", "/opt/program/inference:app"]
