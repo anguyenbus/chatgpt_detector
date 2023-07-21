@@ -11,12 +11,13 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Set the path to the saved model directory, inferencing
 MODEL_DIR = os.environ["SM_MODEL_DIR"]
-MODEL_NAME = "model"
+MODEL_NAME = "latest/model"
 # Set the device (CPU or GPU) for inference
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(os.listdir(MODEL_DIR))
+
 model_path = os.path.join(MODEL_DIR, MODEL_NAME)
 
+print(os.listdir(model_path))
 # Check if the directory exists and is not empty
 if not os.path.exists(MODEL_DIR) or not os.listdir(MODEL_DIR):
     raise ValueError("Model directories are empty in the specified directory.")
