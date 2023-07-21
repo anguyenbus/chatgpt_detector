@@ -41,7 +41,7 @@ def ping():
 
 
 @app.route("/invocations", methods=["POST"])
-def predict():
+def invocations():
     # Get the input text from the request
     input_text = request.json["input_text"]
 
