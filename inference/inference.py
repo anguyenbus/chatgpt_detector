@@ -11,21 +11,21 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Set the path to the saved model directory, inferencing
 MODEL_DIR = os.environ["SM_MODEL_DIR"]
-
+MODEL_NAME = "model"
 # Set the device (CPU or GPU) for inference
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+model_path = os.path.join(MODEL_DIR, MODEL_NAME)
 
 # Check if the directory exists and is not empty
 if not os.path.exists(MODEL_DIR) or not os.listdir(MODEL_DIR):
     raise ValueError("Model directories are empty in the specified directory.")
 
     # Load the tokenizer from the specified directory
-tokenizer = RobertaTokenizer.from_pretrained(MODEL_DIR, local_files_only=True)
 # Initialize the tokenizer and model, load from opt/ml/model only
-tokenizer = RobertaTokenizer.from_pretrained(MODEL_DIR, local_files_only=True)
+tokenizer = RobertaTokenizer.from_pretrained(model_path, local_files_only=True)
 model = RobertaForSequenceClassification.from_pretrained(
-    MODEL_DIR, local_files_only=True).to(DEVICE)
+    model_path, local_files_only=True).to(DEVICE)
 
 # Create a Flask application
 app = Flask(__name__)
