@@ -40,7 +40,7 @@ def ping():
     return "Healthy"
 
 
-@app.route("/predict", methods=["POST"])
+@app.route("/invocations", methods=["POST"])
 def predict():
     # Get the input text from the request
     input_text = request.json["input_text"]
