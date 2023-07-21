@@ -16,6 +16,12 @@ MODEL_DIR = os.environ["SM_MODEL_DIR"]
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
+# Check if the directory exists and is not empty
+if not os.path.exists(MODEL_DIR) or not os.listdir(MODEL_DIR):
+    raise ValueError("Model directories are empty in the specified directory.")
+
+    # Load the tokenizer from the specified directory
+tokenizer = RobertaTokenizer.from_pretrained(MODEL_DIR, local_files_only=True)
 # Initialize the tokenizer and model, load from opt/ml/model only
 tokenizer = RobertaTokenizer.from_pretrained(MODEL_DIR, local_files_only=True)
 model = RobertaForSequenceClassification.from_pretrained(
