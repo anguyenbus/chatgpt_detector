@@ -12,6 +12,7 @@ chatgpt_detector/
 ├── README.md
 └── requirements.txt  # Python dependencies for the project
 
+%md
 
 docker build -t chatgpt-train -f model/Dockerfile .
 
@@ -54,4 +55,15 @@ Result
 ```
 Input Text: This is a test input.
 Predicted Class: 0
+```
+
+
+test with Curl
+```
+curl -X POST -H "Content-Type: application/json" -d '{"input_text": "this is the input test"}' https://5j7pru1j13.execute-api.ap-southeast-2.amazonaws.com/test/api-chatgpt-detector
+```
+
+return
+```
+{"input_text":"this is the input test","predicted_class":0}
 ```
