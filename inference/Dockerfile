@@ -13,7 +13,6 @@ ENV PATH="/opt/program:${PATH}"
 # Set the working directory in the Docker image to /opt/program
 WORKDIR /opt/program
 
-
 # Copy the requirements file into the container
 COPY ./requirements.txt /opt/program/requirements.txt
 
