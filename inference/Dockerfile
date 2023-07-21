@@ -18,7 +18,6 @@ COPY ./requirements.txt /opt/program/requirements.txt
 
 # Install the Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install awscli
 
 # Copy the inference code into the container
 COPY inference/ /opt/program
