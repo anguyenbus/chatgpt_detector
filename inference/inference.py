@@ -14,7 +14,7 @@ MODEL_DIR = os.environ["SM_MODEL_DIR"]
 MODEL_NAME = "model"
 # Set the device (CPU or GPU) for inference
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+os.listdir(MODEL_DIR)
 model_path = os.path.join(MODEL_DIR, MODEL_NAME)
 
 # Check if the directory exists and is not empty
