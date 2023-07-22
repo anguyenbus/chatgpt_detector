@@ -21,6 +21,11 @@ The simplest way is to test with curl
 curl -X POST -H "Content-Type: application/json" -d '{"input_text": "this is the input test"}' https://3iyy9gezd5.execute-api.ap-southeast-2.amazonaws.com/test/api-chatgpt-detector
 ```
 
+Expected return
+```
+{"input_text":"this is the input test","predicted_class":0}
+```
+
 ## Project Structure <a name = "Structure"></a>
 ```
 chatgpt_detector             # Root directory
