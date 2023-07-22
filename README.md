@@ -22,6 +22,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"input_text": "this is the
 ```
 
 ## Project Structure <a name = "Structure"></a>
+```
 chatgpt_detector             # Root directory
 
 │   README.md                # File: README.md containing project information
@@ -58,3 +59,4 @@ chatgpt_detector             # Root directory
     │   terraform.tfstate     # File: terraform.tfstate for Terraform state information
     │   terraform.tfstate.backup  # File: terraform.tfstate.backup for Terraform state backup
     │   variables.tf         # File: variables.tf for Terraform variable definitions
+```
