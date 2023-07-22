@@ -67,5 +67,5 @@ resource "aws_lambda_permission" "api_trigger" {
   principal     = "apigateway.amazonaws.com"
 
   # Replace "3iyy9gezd5" with the actual API Gateway ID (chatgpt-detector-api)
-  source_arn    = "arn:aws:execute-api:ap-southeast-2:373770620841:3iyy9gezd5/*/*/*"
-}
+  source_arn    = "arn:aws:execute-api:ap-southeast-2:373770620841:3iyy9gezd5/*/POST/api-chatgpt-detector"
+} 

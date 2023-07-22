@@ -91,12 +91,6 @@ resource "aws_api_gateway_integration_response" "chatgpt_detector_integration_re
   }
 }
 
-# API Gateway deployment
-resource "aws_api_gateway_deployment" "chatgpt_detector_deployment" {
-  rest_api_id = aws_api_gateway_rest_api.chatgpt_detector_api.id
-  stage_name  = "test"
-}
-
 # Output the API Gateway URL after applying the configuration
 output "api_gateway_url" {
   value = aws_api_gateway_deployment.chatgpt_detector_deployment.invoke_url
@@ -111,4 +105,10 @@ resource "aws_api_gateway_method_response" "response_200" {
   response_models = {
     "application/json" = "Empty"  # Replace "Empty" with the model you want to use for the response body if any
   }
+}
+
+# API Gateway deployment
+resource "aws_api_gateway_deployment" "chatgpt_detector_deployment" {
+  rest_api_id = aws_api_gateway_rest_api.chatgpt_detector_api.id
+  stage_name  = "test"
 }
